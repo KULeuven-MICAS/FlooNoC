@@ -570,7 +570,7 @@ class Network(BaseModel):  # pylint: disable=too-many-public-methods
         for a specific routing algorithm."""
         self.routing.num_endpoints = len(self.graph.get_ni_nodes())
         self.routing.num_cols = self.routers[0].array[0]
-        self.routing.num_nums = self.routers[0].array[1]
+        self.routing.num_rows = self.routers[0].array[1]
         if self.routing.num_endpoints == 0:
             raise ValueError(
                 "No endpoints found in the network. Use the `only_pkg` flag for package generation."
