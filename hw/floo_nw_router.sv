@@ -43,7 +43,9 @@ module floo_nw_router #(
   /// Floo `rsp` link type
   parameter type floo_rsp_t                   = logic,
   /// Floo `wide` link type
-  parameter type floo_wide_t                  = logic
+  parameter type floo_wide_t                  = logic,
+  /// Dependent parameter, do not override!
+  parameter int unsigned NumAddrRulesWidth    = (NumAddrRules>0)? NumAddrRules : 1
 ) (
   input  logic   clk_i,
   input  logic   rst_ni,
@@ -53,7 +55,7 @@ module floo_nw_router #(
   input  id_t id_i,
   /// Routing table
   /// (only used for `RouteAlgo == IdTable`)
-  input  addr_rule_t [NumAddrRules-1:0] id_route_map_i,
+  input  addr_rule_t [NumAddrRulesWidth-1:0] id_route_map_i,
   /// Input and output links
   input   floo_req_t [NumInputs-1:0] floo_req_i,
   input   floo_rsp_t [NumOutputs-1:0] floo_rsp_i,

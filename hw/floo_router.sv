@@ -27,14 +27,16 @@ module floo_router
   parameter int unsigned NumInput         = NumRoutes,
   parameter int unsigned NumOutput        = NumRoutes,
   parameter bit          XYRouteOpt       = 1'b1,
-  parameter bit          NoLoopback       = 1'b1
+  parameter bit          NoLoopback       = 1'b1,
+  /// Dependent parameter, do not override!
+  parameter int unsigned NumAddrRulesWidth    = (NumAddrRules>0)? NumAddrRules : 1  
 ) (
   input  logic                                       clk_i,
   input  logic                                       rst_ni,
   input  logic                                       test_enable_i,
 
   input  id_t                                        xy_id_i,        // if unused assign to '0
-  input  addr_rule_t [NumAddrRules-1:0]              id_route_map_i, // if unused assign to '0
+  input  addr_rule_t [NumAddrRulesWidth-1:0]         id_route_map_i, // if unused assign to '0
 
   input  logic  [NumInput-1:0][NumVirtChannels-1:0]  valid_i, // NOT AXI, requires ready first
   output logic  [NumInput-1:0][NumVirtChannels-1:0]  ready_o, // NOT AXI, requires ready first

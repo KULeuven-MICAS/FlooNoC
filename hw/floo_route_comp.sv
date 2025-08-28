@@ -18,14 +18,16 @@ module floo_route_comp
   /// The type of the route
   parameter type route_t = logic,
   /// The type of the address rules
-  parameter type addr_rule_t = logic
+  parameter type addr_rule_t = logic,
+  /// Dependent parameters. Do not overrride!
+  parameter int unsigned NumRoutesWidth = (RouteCfg.NumRoutes > 0) ? RouteCfg.NumRoutes : 1
 ) (
   input  logic                                  clk_i,
   input  logic                                  rst_ni,
   input  id_t                                   id_i,
   input  addr_t                                 addr_i,
   input  addr_rule_t [RouteCfg.NumSamRules-1:0] addr_map_i,
-  input  route_t     [RouteCfg.NumRoutes-1:0]   route_table_i,
+  input  route_t     [NumRoutesWidth-1:0]       route_table_i,
   input  logic                                  en_default_idx_i,
   input  id_t                                   default_idx_i,
   output route_t                                route_o,

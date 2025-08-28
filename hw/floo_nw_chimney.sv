@@ -74,7 +74,9 @@ module floo_nw_chimney #(
   parameter type floo_wide_t                            = logic,
   /// SRAM configuration type `tc_sram_impl` in RoB
   /// Only used if technology-dependent SRAM is used
-  parameter type sram_cfg_t                             = logic
+  parameter type sram_cfg_t                             = logic,
+  /// Dependent parameters. Do not overrride!
+  parameter int unsigned NumRoutesWidth = (RouteCfg.NumRoutes > 0) ? RouteCfg.NumRoutes : 1
 ) (
   input  logic clk_i,
   input  logic rst_ni,
@@ -94,7 +96,7 @@ module floo_nw_chimney #(
   /// Coordinates/ID of the current tile
   input  id_t id_i,
   /// Routing table for the current tile
-  input  route_t [RouteCfg.NumRoutes-1:0] route_table_i,
+  input  route_t      [NumRoutesWidth-1:0] route_table_i,
   /// Default ID
   input  logic        en_default_idx_i,
   input  id_t         default_idx_i,

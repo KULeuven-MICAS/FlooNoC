@@ -20,21 +20,24 @@ module floo_route_select
   parameter type         addr_rule_t   = logic,
   parameter type         id_t          = logic[IdWidth-1:0],
   /// Used for source-based routing
-  parameter int unsigned RouteSelWidth = $clog2(NumRoutes)
+  parameter int unsigned RouteSelWidth = $clog2(NumRoutes),
+  /// Dependent parameter, do not override!
+  parameter int unsigned NumAddrRulesWidth    = (NumAddrRules>0)? NumAddrRules : 1 
+  
 ) (
-  input  logic                          clk_i,
-  input  logic                          rst_ni,
-  input  logic                          test_enable_i,
+  input  logic                               clk_i,
+  input  logic                               rst_ni,
+  input  logic                               test_enable_i,
 
-  input  id_t                           xy_id_i,
-  input  addr_rule_t [NumAddrRules-1:0] id_route_map_i,
+  input  id_t                                xy_id_i,
+  input  addr_rule_t [NumAddrRulesWidth-1:0] id_route_map_i,
 
-  input  flit_t                         channel_i,
-  input  logic                          valid_i,
-  input  logic                          ready_i,
-  output flit_t                         channel_o,
-  output logic [NumRoutes-1:0]          route_sel_o, // One-hot route
-  output logic [RouteSelWidth-1:0]      route_sel_id_o
+  input  flit_t                              channel_i,
+  input  logic                               valid_i,
+  input  logic                               ready_i,
+  output flit_t                              channel_o,
+  output logic [NumRoutes-1:0]               route_sel_o, // One-hot route
+  output logic [RouteSelWidth-1:0]           route_sel_id_o
 );
 
   logic [NumRoutes-1:0] route_sel;
